@@ -1,22 +1,9 @@
 # Your code goes here
+""" reading through the journal and extracting dates and secret codes"""
 import pandas as pd
 import re
+from datetime import datetime
 
-# 1. Load Artifact Data (Excel)
-
-# Function: load_artifact_data(excel_filepath)
-
-# Input: excel_filepath (string): The path to the artifacts.xlsx file.
-
-# Action:
-
-# Read the data specifically from the sheet named 'Main Chamber'.
-
-# The actual table data starts after the first 3 rows (skip these introductory rows).
-
-# Use Pandas to read this data into a DataFrame.
-
-# Return: A Pandas DataFrame containing the artifact data from the specified sheet, skipping the initial rows.
 
 def load_artifact_data(excel_filepath):
     """
@@ -63,8 +50,21 @@ def extract_journal_dates(journal_text):
     # Hint: Use re.findall with a raw string pattern for MM/DD/YYYY format.
     # Pattern idea: r"\d{2}/\d{2}/\d{4}"
     # Replace 'pass' with your code
+    dates = re.findall(r"\d{2}/\d{2}/\d{4}", journal_text)
+    valid_dates = []
+    #iterationg through all matches of format and verifying if they are valid dates
+    for date in dates:
+        # Convert the date string to a datetime object
+        try:
+            datetime.strptime(date, "%m/%d/%Y")
+        except ValueError:
+            print(f"Invalid date format: {date}")
+            continue
+        valid_dates.append(date)
 
-    return re.findall(r"\d{2}/\d{2}/\d{4}", journal_text)
+
+    return valid_dates
+
     # return the list of found dates
 
 def extract_secret_codes(journal_text):
