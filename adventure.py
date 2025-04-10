@@ -1,8 +1,9 @@
 # Your code goes here
 """ reading through the journal and extracting dates and secret codes"""
 import re
-import pandas as pd
 from datetime import datetime
+import pandas as pd
+
 
 
 def load_artifact_data(excel_filepath):
@@ -50,10 +51,10 @@ def extract_journal_dates(journal_text):
     # Hint: Use re.findall with a raw string pattern for MM/DD/YYYY format.
     # Pattern idea: r"\d{2}/\d{2}/\d{4}"
     # Replace 'pass' with your code
-    dates = re.findall(r"\d{2}/\d{2}/\d{4}", journal_text)
+    matches = re.findall(r"\d{2}/\d{2}/\d{4}", journal_text)
     valid_dates = []
     #iterationg through all matches of format and verifying if they are valid dates
-    for date in dates:
+    for date in matches:
         # Convert the date string to a datetime object
         try:
             datetime.strptime(date, "%m/%d/%Y")
